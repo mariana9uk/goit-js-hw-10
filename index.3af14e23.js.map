@@ -1,1 +1,0 @@
-{"mappings":"AAEmBA,SAASC,cAAc,iBAC1BC,UAAUD,cAAc","sources":["src/index.js"],"sourcesContent":["\n\nconst selectorEl = document.querySelector('.breed-select');\nconst catInfo = documennt.querySelector('.cat-info');\n"],"names":["document","querySelector","documennt"],"version":3,"file":"index.3af14e23.js.map"}
