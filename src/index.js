@@ -5,36 +5,42 @@ axios.defaults.headers.common["x-api-key"] = "live_miOQ9IJmBTf4JhWdnWNTcaxj7nGrl
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 const catInfoWrapEl = document.querySelector('.cat-info');
 const selectorEl = document.querySelector('.breed-select');
-const alertPopup = document.querySelector('.error')
-let isAlertVisible = false
+const alertPopup = document.querySelector('.error');
+const loaderEl = document.querySelector(".loader")
+
+
+let isLoaderActive = false;
+toggleLoader()
   fetchBreeds()
   .then(breedsData => {
 console.log(breedsData);
-const breedSelect = new SlimSelect({
-  select: selectorEl,
-  settings: {
+  const options = breedsData.map(breed => `<option value="${breed.id}">${breed.name}</option>`)
+  .join("");
+  selectorEl.innerHTML = options;
+  
+  new SlimSelect({
+    select: selectorEl,
+    settings: {
       allowDeselect: true,
       placeholderText: 'Виберіть породу',
       showSearch: false,
-      searchHighlight: true,
-    },   
+      searchHighlight: false,
+    },
+  });
 })
-const selectData = breedsData.map(breed => ({
-  text: breed.name,
-  value: breed.id
-}))
-breedSelect.setData(selectData);
-  })
   .catch(error => {
  console.log("Error!", error)
   });
 
-
   const handleCatInfoSubmit = (event) =>{
     event.preventDefault()
+    isLoaderActive=true;
+   
     const selectedBreedId = event.target.value;
     console.log(selectedBreedId)
 
+    toggleLoader()
+    setTimeout(() => {
    fetchCatByBreed(selectedBreedId)
          .then(data => {
           console.log(data)
@@ -43,29 +49,48 @@ breedSelect.setData(selectData);
   .catch(error => {
        console.log("Woops!", error)
            Notiflix.Notify.failure('❌Помилка');
+  })
+  .finally(() => {
+    isLoaderActive = false;
+    toggleLoader();
   });
-};
+}, 5000)};
 function renderCatData(data){
   
   const markup = `
-      <img src="${data[0].url}" alt="Cat Image">
-    <p>Назва породи: ${data[0].breeds[0].name}</p>
-    <p>Опис: ${data[0].breeds[0].description}</p>
-    <p>Темперамент: ${data[0].breeds[0].temperament}</p>`
-    catInfoWrapEl.insertAdjacentHTML("beforeend", markup);
+    <div class="cat-info-css-settings">  <img src="${data[0].url}" class="cat-image" alt="Cat Image">
+    <h1>Breed name: ${data[0].breeds[0].name}</h1>
+    <p>Breed description: ${data[0].breeds[0].description}</p>
+    <p>Temperament: ${data[0].breeds[0].temperament}</p></div>`
+    catInfoWrapEl.innerHTML =  markup;
 }
+
   selectorEl.addEventListener('change', handleCatInfoSubmit)
 
-  // function toggleAlertPopup() {
-  //   if (isAlertVisible) {
-  //     return;
-  //   }
-  //   isAlertVisible = true;
-  //   alertPopup.classList.add("is-visible");
-  //   setTimeout(() => {
-  //     alertPopup.classList.remove("is-visible");
-  //     isAlertVisible = false;
-  //   }, 3000)}
+
+  function toggleLoader() {
+    if (isLoaderActive) {
+      selectorEl.classList.add("is-hidden");
+      loaderEl.classList.remove("is-hidden");
+    } else {
+      loaderEl.classList.add("is-hidden");
+      selectorEl.classList.remove("is-hidden");
+    }
+  }
+  // function toggleLoader() {
+  //   if (isLoaderActive = true) {
+  //     selectorEl.classList.add("is-hidden")
+  //     loaderEl.classList.remove("is-hidden")
+        
+  //     setTimeout(() => {
+  //     loaderEl.classList.add("is-hidden")
+  //     selectorEl.classList.remove("is-hidden")
+  //     isLoaderActive = false;
+  //   }, 5000) }
+  //  if(isLoaderActive=false)
+  //   { loaderEl.classList.add("is-hidden")
+  //   selectorEl.classList.remove("is-hidden")}
+  // }
 
 
   // fetch("https://api.thecatapi.com/v1/breeds")
@@ -83,4 +108,12 @@ function renderCatData(data){
 //           <p>${breed.name}</p>
 //           });
 //   userList.innerHTML = markup;
-// }
+// }// const breedSelect = new SlimSelect({
+//   select: selectorEl,
+//   settings: {
+//       allowDeselect: true,
+//       placeholderText: 'Виберіть породу',
+//       showSearch: false,
+//       searchHighlight: true,
+//     },   
+// })
