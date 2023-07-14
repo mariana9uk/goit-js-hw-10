@@ -24,3 +24,6 @@
       
         font-family:'Gill Sans', sans-serif;
     }
+    .is-hidden{
+      display: none;
+    }
