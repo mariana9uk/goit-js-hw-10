@@ -24,6 +24,8 @@
     display: none;
   
   }
+  .cat-select.is-hidden {
+    display: none}
   body{
     background-color: peachpuff;
   } 

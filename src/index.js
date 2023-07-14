@@ -1,4 +1,5 @@
 import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css'
 import axios from "axios";
 import Notiflix from 'notiflix'
 axios.defaults.headers.common["x-api-key"] = "live_miOQ9IJmBTf4JhWdnWNTcaxj7nGrlgj5kYjUnmo8YzynBCK5HwOcOpOl4BaI5vhv";
@@ -25,7 +26,9 @@ console.log(breedsData);
       placeholderText: 'Виберіть породу',
       showSearch: false,
       searchHighlight: false,
+    
     },
+  
   });
 })
   .catch(error => {
@@ -52,7 +55,7 @@ console.log(breedsData);
   })
   .finally(() => {
     isLoaderActive = false;
-    toggleLoader();
+toggleLoader()
   });
 }, 5000)};
 function renderCatData(data){
@@ -64,19 +67,20 @@ function renderCatData(data){
     <p>Temperament: ${data[0].breeds[0].temperament}</p></div>`
     catInfoWrapEl.innerHTML =  markup;
 }
-
-  selectorEl.addEventListener('change', handleCatInfoSubmit)
+selectorEl.addEventListener('change', handleCatInfoSubmit)
 
 
   function toggleLoader() {
     if (isLoaderActive) {
+     
       selectorEl.classList.add("is-hidden");
       loaderEl.classList.remove("is-hidden");
-      catInfoWrapEl.classList.add('is-hidden')
+      catInfoWrapEl.classList.add("is-hidden");
+     
     } else {
-      loaderEl.classList.add("is-hidden");
       selectorEl.classList.remove("is-hidden");
-      catInfoWrapEl.classList.remove('is-hidden')
+      loaderEl.classList.add("is-hidden");
+           catInfoWrapEl.classList.remove("is-hidden");
     }
   }
   // function toggleLoader() {
