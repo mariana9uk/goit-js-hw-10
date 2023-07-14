@@ -6,7 +6,7 @@ axios.defaults.headers.common["x-api-key"] = "live_miOQ9IJmBTf4JhWdnWNTcaxj7nGrl
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 const catInfoWrapEl = document.querySelector('.cat-info');
 const selectorEl = document.querySelector('.breed-select');
-const alertPopup = document.querySelector('.error');
+const alert = document.querySelector('.error');
 const loaderEl = document.querySelector(".loader")
 
 
@@ -33,6 +33,8 @@ console.log(breedsData);
 })
   .catch(error => {
  console.log("Error!", error)
+ catInfoWrapEl.classList.remove("is-hidden");
+ Notiflix.Loading.remove()
   });
 
   const handleCatInfoSubmit = (event) =>{
@@ -44,6 +46,7 @@ console.log(breedsData);
 
     toggleLoader()
     setTimeout(() => {
+      
    fetchCatByBreed(selectedBreedId)
          .then(data => {
           console.log(data)
@@ -52,6 +55,7 @@ console.log(breedsData);
   .catch(error => {
        console.log("Woops!", error)
            Notiflix.Notify.failure('❌Помилка');
+alert.classList.remove("is-hidden")
   })
   .finally(() => {
     isLoaderActive = false;
@@ -72,15 +76,16 @@ selectorEl.addEventListener('change', handleCatInfoSubmit)
 
   function toggleLoader() {
     if (isLoaderActive) {
-     
-      selectorEl.classList.add("is-hidden");
+      
+      selectorEl.classList.add("is-hidden")
       loaderEl.classList.remove("is-hidden");
       catInfoWrapEl.classList.add("is-hidden");
-     
+      Notiflix.Loading.dots()
     } else {
       selectorEl.classList.remove("is-hidden");
       loaderEl.classList.add("is-hidden");
            catInfoWrapEl.classList.remove("is-hidden");
+           Notiflix.Loading.remove()
     }
   }
   // function toggleLoader() {
