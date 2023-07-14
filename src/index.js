@@ -72,9 +72,11 @@ function renderCatData(data){
     if (isLoaderActive) {
       selectorEl.classList.add("is-hidden");
       loaderEl.classList.remove("is-hidden");
+      catInfoWrapEl.classList.add('is-hidden')
     } else {
       loaderEl.classList.add("is-hidden");
       selectorEl.classList.remove("is-hidden");
+      catInfoWrapEl.classList.remove('is-hidden')
     }
   }
   // function toggleLoader() {
