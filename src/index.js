@@ -56,16 +56,16 @@ function renderCatData(data){
 }
   selectorEl.addEventListener('change', handleCatInfoSubmit)
 
-  function toggleAlertPopup() {
-    if (isAlertVisible) {
-      return;
-    }
-    isAlertVisible = true;
-    alertPopup.classList.add("is-visible");
-    setTimeout(() => {
-      alertPopup.classList.remove("is-visible");
-      isAlertVisible = false;
-    }, 3000)}
+  // function toggleAlertPopup() {
+  //   if (isAlertVisible) {
+  //     return;
+  //   }
+  //   isAlertVisible = true;
+  //   alertPopup.classList.add("is-visible");
+  //   setTimeout(() => {
+  //     alertPopup.classList.remove("is-visible");
+  //     isAlertVisible = false;
+  //   }, 3000)}
 
 
   // fetch("https://api.thecatapi.com/v1/breeds")
