@@ -22,7 +22,7 @@ console.log(breedsData);
   new SlimSelect({
     select: selectorEl,
     settings: {
-      allowDeselect: true,
+      // allowDeselect: true,
       placeholderText: 'Виберіть породу',
       showSearch: false,
       searchHighlight: false,
@@ -33,7 +33,6 @@ console.log(breedsData);
 })
   .catch(error => {
  console.log("Error!", error)
- catInfoWrapEl.classList.remove("is-hidden");
  Notiflix.Loading.remove()
   });
 
@@ -56,12 +55,14 @@ console.log(breedsData);
        console.log("Woops!", error)
            Notiflix.Notify.failure('❌Помилка');
 alert.classList.remove("is-hidden")
+catInfoWrapEl.innerHTML=""
   })
   .finally(() => {
     isLoaderActive = false;
 toggleLoader()
+
   });
-}, 5000)};
+}, 3000)};
 function renderCatData(data){
   
   const markup = `
@@ -72,7 +73,12 @@ function renderCatData(data){
     catInfoWrapEl.innerHTML =  markup;
 }
 selectorEl.addEventListener('change', handleCatInfoSubmit)
-
+selectorEl.addEventListener('change', hideAllert)
+  
+function hideAllert(){
+  alert.classList.add("is-hidden")
+ 
+}
 
   function toggleLoader() {
     if (isLoaderActive) {
@@ -87,6 +93,7 @@ selectorEl.addEventListener('change', handleCatInfoSubmit)
            catInfoWrapEl.classList.remove("is-hidden");
            Notiflix.Loading.remove()
     }
+    
   }
   // function toggleLoader() {
   //   if (isLoaderActive = true) {
